@@ -1,0 +1,24 @@
+name: Auto Commit
+
+on:
+  schedule:
+    # මේක හැමදාම ලංකාවේ වෙලාවෙන් දවල් 3:30 ට (UTC 10:00) Run වෙන්න හදලා තියෙන්නේ.
+    - cron: '0 10 * * *'
+  
+  # ඔයාට ඕන වෙලාවක බොත්තමක් ඔබලා Run කරන්නත් මේකෙන් පුළුවන්
+  workflow_dispatch:
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Update file and Commit
+        run: |
+          echo "Last Update: $(date)" > update.txt
+          git config --global user.name "oshandageethanjana"
+          git config --global user.email "oshanda7@gmail.com"
+          git add update.txt
+          git commit -m "Automated Daily Commit 🤖"
+          git push
